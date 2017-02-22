@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import tech.destinum.carmemo.fragments.Selection;
 import tech.destinum.carmemo.fragments.Settings;
 
 public class NavDrawer extends AppCompatActivity
@@ -71,8 +72,8 @@ public class NavDrawer extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragment_manager = getFragmentManager();
 
-        if (id == R.id.nav_gallery) {
-            // Handle the camera action
+        if (id == R.id.nav_home) {
+            fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
         } else if (id == R.id.nav_settings) {
             fragment_manager.beginTransaction().replace(R.id.content_frame, new Settings()).commit();
 
