@@ -6,6 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    private final static String DB_NAME = "carmemo";
+    private final static int DB_VERSION = 1;
+
+    public final static String TABLE_CATEGORIES = "categories";
+    public final static String CATEGORIES_COLUMN_ID = "_id";
+    public final static String CATEGORIES_COLUMN_NAME = "name";
+    public final static String CATEGORIES_COLUMN_DESCRIPTION = "description";
+
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

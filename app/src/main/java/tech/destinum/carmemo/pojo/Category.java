@@ -3,13 +3,11 @@ package tech.destinum.carmemo.pojo;
 public class Category {
     private String name, description;
     private int image;
-    private long _id;
 
-    public Category(String name, String description, int image, long _id) {
+    public Category(String name, String description, int image) {
         this.name = name;
         this.description = description;
         this.image = image;
-        this._id = _id;
     }
 
     public String getName() {
@@ -36,11 +34,4 @@ public class Category {
         this.image = image;
     }
 
-    public long get_id() {
-        return _id;
-    }
-
-    public void set_id(long _id) {
-        this._id = _id;
-    }
 }

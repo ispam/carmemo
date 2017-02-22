@@ -14,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import tech.destinum.carmemo.R;
 import tech.destinum.carmemo.adapters.ListAdapter;
+import tech.destinum.carmemo.pojo.Category;
 
 public class Selection extends Fragment {
 
@@ -23,6 +26,7 @@ public class Selection extends Fragment {
     private ListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Context mContext;
+    private ArrayList<Category> mCategoryArrayList;
 
     @Nullable
     @Override
@@ -31,7 +35,16 @@ public class Selection extends Fragment {
         View root_view = inflater.inflate(R.layout.selection, container, false);
         mRecyclerView = (RecyclerView) root_view.findViewById(R.id.recycler_view);
 
-        mAdapter = new ListAdapter(mContext, mDBHelper.getAllCategories());
+        int[] covers = new int[]{
+                R.drawable.moto,
+                R.drawable.private_transport,
+                R.drawable.publico};
+
+        mCategoryArrayList = new ArrayList<>();
+        mCategoryArrayList.add(new Category("Servicio Particular", "Si usted utiliza un vehículo de placas amarillas y de uso privado", covers[1]));
+        mCategoryArrayList.add(new Category("Servicio Público", "Si usted utiliza un vehículo de placas blancas y de uso público", covers[2]));
+        mCategoryArrayList.add(new Category("Motos", "Si usted utiliza una moto de 2 o 4 Tiempos", covers[0]));
+        mAdapter = new ListAdapter(mContext, mCategoryArrayList);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);

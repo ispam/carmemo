@@ -31,7 +31,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category category = mCategories.get(position);
-        holder.mTitle.setText("");
+        holder.mTitle.setText(category.getName());
+        holder.mDescription.setText(category.getDescription());
+        holder.mImage.setImageResource(category.getImage());
 
     }
 
