@@ -68,17 +68,18 @@ public class NavDrawer extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
         FragmentManager fragment_manager = getFragmentManager();
 
-        if (id == R.id.nav_home) {
-            fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
-        } else if (id == R.id.nav_settings) {
-            fragment_manager.beginTransaction().replace(R.id.content_frame, new Settings()).commit();
-
-        } else if (id == R.id.nav_slideshow) {
-
+        switch (item.getItemId()){
+            case R.id.nav_home:
+                fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
+                break;
+            case R.id.nav_settings:
+                fragment_manager.beginTransaction().replace(R.id.content_frame, new Settings()).commit();
+                break;
+            default:
+                fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

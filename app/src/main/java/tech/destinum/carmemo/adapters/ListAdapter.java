@@ -34,7 +34,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.mTitle.setText(category.getName());
         holder.mDescription.setText(category.getDescription());
         holder.mImage.setImageResource(category.getImage());
-
     }
 
     @Override
