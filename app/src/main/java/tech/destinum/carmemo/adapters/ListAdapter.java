@@ -1,6 +1,8 @@
 package tech.destinum.carmemo.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tech.destinum.carmemo.R;
+import tech.destinum.carmemo.activities.Form;
 import tech.destinum.carmemo.pojo.Category;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
@@ -34,6 +37,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.mTitle.setText(category.getName());
         holder.mDescription.setText(category.getDescription());
         holder.mImage.setImageResource(category.getImage());
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), Form.class);
+                view.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -45,6 +55,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         public TextView mTitle, mDescription;
         public ImageView mImage;
+        public CardView mCardView;
 
         public ViewHolder(View view) {
             super(view);
@@ -52,6 +63,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             mTitle = (TextView) view.findViewById(R.id.tv_title);
             mDescription = (TextView) view.findViewById(R.id.tv_description);
             mImage = (ImageView) view.findViewById(R.id.image_category);
+            mCardView = (CardView) view.findViewById(R.id.card_view);
 
         }
     }
