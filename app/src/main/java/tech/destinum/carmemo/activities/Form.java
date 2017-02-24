@@ -1,6 +1,7 @@
 package tech.destinum.carmemo.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -85,12 +86,24 @@ public class Form extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.confirmation:
-
+                createUser();
+                Intent intent = new Intent();
+                startActivity(intent);
                 break;
             case android.R.id.home:
                 onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createUser() {
+        String soat = mETSOAT.getText().toString();
+        String rtm = mETRTM.getText().toString();
+        String str = mETSTR.getText().toString();
+        String src = mETSRC.getText().toString();
+        String to = mETTO.getText().toString();
+
+
     }
 }
