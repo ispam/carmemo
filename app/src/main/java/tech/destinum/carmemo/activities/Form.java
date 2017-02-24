@@ -3,6 +3,9 @@ package tech.destinum.carmemo.activities;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -31,6 +34,8 @@ public class Form extends AppCompatActivity {
         mETSTR = (EditText) findViewById(R.id.etSTR);
         mETSRC = (EditText) findViewById(R.id.etSRC);
         mETTO = (EditText) findViewById(R.id.etTO);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSwitchSOAT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +72,25 @@ public class Form extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.form_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.confirmation:
+
+                break;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
