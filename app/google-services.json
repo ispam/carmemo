@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "698008070249",
+    "project_id": "firebase-carmemo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698008070249:android:702c67e9ae681900",
+        "android_client_info": {
+          "package_name": "tech.destinum.carmemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698008070249-oh5eho2dtae1g6eme206gtr4f8d7eddt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "698008070249-ui7qk9vq8187f1am6snod05g1tok5d42.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.destinum.carmemo",
+            "certificate_hash": "43d884cd41860a758bdfc24c67e8e40b81b9b850"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw79ftBVeQeEYTrO93LkgC66smbvToUWY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
