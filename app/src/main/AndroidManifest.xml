@@ -9,8 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".NavDrawer"
-            android:label="@string/title_activity_nav_drawer"
+            android:name=".activities.Login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,9 +23,12 @@
             android:name=".activities.Form"
             android:parentActivityName=".NavDrawer">
         </activity>
-        <activity android:name=".activities.Login">
+        <activity android:name=".NavDrawer"
+                  android:label="@string/title_activity_nav_drawer"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.Registration">
+        <activity android:name=".activities.Registration"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

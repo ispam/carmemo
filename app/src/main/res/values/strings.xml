@@ -11,5 +11,8 @@
     <string name="sign_in">Login</string>
     <string name="or">Or</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="new_acc">Need a new Account?</string>
+    <string name="new_acc">Need a New Account?</string>
+    <string name="already_registed">Already Registered? Click Here</string>
+    <string name="name_regis">Name</string>
+    <string name="regis_button">Register</string>
 </resources>

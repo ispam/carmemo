@@ -8,4 +8,7 @@
     <string name="or">Ó</string>
     <string name="forgot_password">Olvidó su Clave?</string>
     <string name="new_acc">Necesita Cuenta Nueva?</string>
+    <string name="already_registered">Ya tiene cuenta? Clickee Aquí</string>
+    <string name="name_regis">Nombre</string>
+    <string name="regis_button">Registrarse</string>
 </resources>

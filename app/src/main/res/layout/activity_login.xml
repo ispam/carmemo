@@ -19,7 +19,7 @@
         app:srcCompat="@mipmap/ic_launcher"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/imageView2"/>
 
     <EditText
@@ -83,7 +83,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="11dp"
-        android:layout_toRigthOf="@+id/tvOR"
         android:layout_marginLeft="8dp"
         android:layout_toEndOf="@+id/tvOR"
         />
@@ -106,7 +105,7 @@
         android:background="@drawable/round_button"
         android:layout_below="@id/tvOR"
         android:layout_marginTop="15dp"
-        android:layout_toLeftOf="@id/facebook"
+        android:layout_toLeftOf="@+id/facebook"
         android:layout_marginRight="30dp"
         android:id="@+id/twitter"/>
 
