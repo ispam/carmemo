@@ -3,4 +3,9 @@
     <string name="app_name">Carmemo</string>
     <string name="settings">Ajustes</string>
     <string name="home">Inicio</string>
+    <string name="password">Clave</string>
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="or">Ó</string>
+    <string name="forgot_password">Olvidó su Clave?</string>
+    <string name="new_acc">Necesita Cuenta Nueva?</string>
 </resources>
