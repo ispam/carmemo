@@ -99,34 +99,6 @@
         android:layout_toLeftOf="@+id/tvOR"
         android:layout_toStartOf="@+id/tvOR"/>
 
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round_button"
-        android:layout_below="@id/tvOR"
-        android:layout_marginTop="15dp"
-        android:layout_toLeftOf="@+id/facebook"
-        android:layout_marginRight="30dp"
-        android:id="@+id/twitter"/>
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round_button"
-        android:layout_below="@id/tvOR"
-        android:layout_marginTop="15dp"
-        android:id="@+id/facebook"
-        android:layout_centerHorizontal="true"/>
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round_button"
-        android:layout_below="@id/tvOR"
-        android:layout_marginTop="15dp"
-        android:id="@+id/gmail"
-        android:layout_toRightOf="@id/facebook"
-        android:layout_marginLeft="30dp"/>
 
     <TextView
         android:text="@string/new_acc"
@@ -150,4 +122,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:id="@+id/tvForgotPass"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/google_button"
+        android:layout_below="@+id/tvOR"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        ></com.google.android.gms.common.SignInButton>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/google_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:id="@+id/textView2"/>
 </RelativeLayout>
