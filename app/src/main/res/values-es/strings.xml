@@ -11,4 +11,7 @@
     <string name="already_registered">Ya tiene cuenta? Clickee Aquí</string>
     <string name="name_regis">Nombre</string>
     <string name="regis_button">Registrarse</string>
+    <string name="auth0_client_id">28BCzzh69tSn8aWrbZvZmJSgExSUrH4W</string>
+    <string name="auth0_domain">ispam.auth0.com</string>
+    <string name="auth0_preferences">AUTH0_SHARED_PREFERENCES_KEY</string>
 </resources>

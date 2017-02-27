@@ -1,119 +1,119 @@
 package tech.destinum.carmemo.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.auth.api.Auth;
+import com.auth0.android.Auth0;
+import com.auth0.android.authentication.AuthenticationAPIClient;
+import com.auth0.android.authentication.AuthenticationException;
+import com.auth0.android.callback.BaseCallback;
+import com.auth0.android.lock.AuthenticationCallback;
+import com.auth0.android.lock.Lock;
+import com.auth0.android.lock.LockCallback;
+import com.auth0.android.lock.utils.LockException;
+import com.auth0.android.result.Credentials;
+import com.auth0.android.result.UserProfile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import tech.destinum.carmemo.NavDrawer;
 import tech.destinum.carmemo.R;
+import tech.destinum.carmemo.tools.CredentialsManager;
 
 public class Login extends AppCompatActivity {
 
-    private Button mButton;
-    private TextView mNewAcc;
-    private GoogleApiClient mGoogleApiClient;
-    private GoogleSignInOptions mGoogleSignInOptions;
-    private SignInButton mSignInButton;
-    private int REQUEST_CODE = 1992;
-    private TextView mtext;
+    private Lock lock;
+    private static final String PREFERENCES = "Preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        mButton = (Button) findViewById(R.id.button_log_in);
-        mNewAcc = (TextView) findViewById(R.id.tvNewAcc);
-        mSignInButton = (SignInButton) findViewById(R.id.google_button);
-        mtext = (TextView) findViewById(R.id.textView2);
+        Auth0 auth0 = new Auth0("28BCzzh69tSn8aWrbZvZmJSgExSUrH4W", "ispam.auth0.com");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("scope", "openid offline_access");
+        lock = Lock.newBuilder(auth0, callback)
+                .withAuthenticationParameters(parameters)
+                // Add parameters to the Lock Builder
+                .build(this);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NavDrawer.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        mNewAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Registration.class);
-                startActivity(intent);
-            }
-        });
-
-        mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-            @Override
-            public void onConnected(@Nullable Bundle bundle) {
-                goMain();
-            }
-
-            @Override
-            public void onConnectionSuspended(int i) {
-
-            }
-        })
-
-        .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                Toast.makeText(getApplicationContext(), "Login Error", Toast.LENGTH_LONG).show();
-                Log.d("Connection Result:", connectionResult.toString());
-            }
-        })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, mGoogleSignInOptions)
-                .build();
-
-        mSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
-        mSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
-    }
-
-    private void goMain() {
-        Intent intent = new Intent(getApplicationContext(), NavDrawer.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE){
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            GoogleSignInAccount account = result.getSignInAccount();
-            String name = account.getDisplayName();
+        if (CredentialsManager.getCredentials(this).getIdToken() == null) {
+            startActivity(lock.newIntent(this));
+            return;
+        } else {
             Intent intent = new Intent(getApplicationContext(), NavDrawer.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("name", name);
-            mtext.setText(name);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
+
+//        AuthenticationAPIClient aClient = new AuthenticationAPIClient(auth0);
+//        aClient.tokenInfo(CredentialsManager.getCredentials(this).getIdToken())
+//                .start(new BaseCallback<UserProfile, AuthenticationException>() {
+//                    @Override
+//                    public void onSuccess(final UserProfile payload) {
+//                        Login.this.runOnUiThread(new Runnable() {
+//                            public void run() {
+//                                Toast.makeText(Login.this, "Automatic Login Success", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                        startActivity(new Intent(getApplicationContext(), NavDrawer.class));
+//                        finish();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(AuthenticationException error) {
+//                        Login.this.runOnUiThread(new Runnable() {
+//                            public void run() {
+//                                Toast.makeText(Login.this, "Session Expired, please Log In", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                        CredentialsManager.deleteCredentials(getApplicationContext());
+//                        startActivity(lock.newIntent(Login.this));
+//                    }
+//                });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Your own Activity code
+        lock.onDestroy(this);
+        lock = null;
+    }
+
+    private LockCallback callback = new AuthenticationCallback() {
+        @Override
+        public void onAuthentication(Credentials credentials) {
+            // Login Success response
+            Toast.makeText(getApplicationContext(), "Log In - Success", Toast.LENGTH_SHORT).show();
+            CredentialsManager.saveCredentials(getApplicationContext(), credentials);
+            startActivity(new Intent(Login.this, NavDrawer.class));
+            finish();
+        }
+
+        @Override
+        public void onCanceled() {
+            // Login Cancelled response
+            Toast.makeText(getApplicationContext(), "Log In - Cancelled", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(LockException error){
+            // Login Error response
+            Toast.makeText(getApplicationContext(), "Log In - Error Occurred", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private void logout() {
+        CredentialsManager.deleteCredentials(this);
+        startActivity(new Intent(this, Login.class));
+        finish();
+    }
+
 }
