@@ -14,4 +14,5 @@
     <string name="auth0_client_id">28BCzzh69tSn8aWrbZvZmJSgExSUrH4W</string>
     <string name="auth0_domain">ispam.auth0.com</string>
     <string name="auth0_preferences">AUTH0_SHARED_PREFERENCES_KEY</string>
+    <string name="logout">Desconectarse</string>
 </resources>

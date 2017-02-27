@@ -1,6 +1,7 @@
 package tech.destinum.carmemo;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ import com.auth0.android.callback.BaseCallback;
 import com.auth0.android.result.UserProfile;
 import com.squareup.picasso.Picasso;
 
+import tech.destinum.carmemo.activities.Login;
 import tech.destinum.carmemo.fragments.Selection;
 import tech.destinum.carmemo.fragments.Settings;
 import tech.destinum.carmemo.tools.CredentialsManager;
@@ -121,7 +123,10 @@ public class NavDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            CredentialsManager.deleteCredentials(this);
+            startActivity(new Intent(this, Login.class));
+            finish();
             return true;
         }
 

@@ -52,31 +52,31 @@ public class Login extends AppCompatActivity {
             finish();
         }
 
-//        AuthenticationAPIClient aClient = new AuthenticationAPIClient(auth0);
-//        aClient.tokenInfo(CredentialsManager.getCredentials(this).getIdToken())
-//                .start(new BaseCallback<UserProfile, AuthenticationException>() {
-//                    @Override
-//                    public void onSuccess(final UserProfile payload) {
-//                        Login.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                Toast.makeText(Login.this, "Automatic Login Success", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        startActivity(new Intent(getApplicationContext(), NavDrawer.class));
-//                        finish();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(AuthenticationException error) {
-//                        Login.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                Toast.makeText(Login.this, "Session Expired, please Log In", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        CredentialsManager.deleteCredentials(getApplicationContext());
-//                        startActivity(lock.newIntent(Login.this));
-//                    }
-//                });
+        AuthenticationAPIClient aClient = new AuthenticationAPIClient(auth0);
+        aClient.tokenInfo(CredentialsManager.getCredentials(this).getIdToken())
+                .start(new BaseCallback<UserProfile, AuthenticationException>() {
+                    @Override
+                    public void onSuccess(final UserProfile payload) {
+                        Login.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(Login.this, "Automatic Login Success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        startActivity(new Intent(getApplicationContext(), NavDrawer.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(AuthenticationException error) {
+                        Login.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(Login.this, "Session Expired, please Log In", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        CredentialsManager.deleteCredentials(getApplicationContext());
+                        startActivity(lock.newIntent(Login.this));
+                    }
+                });
     }
 
     @Override
