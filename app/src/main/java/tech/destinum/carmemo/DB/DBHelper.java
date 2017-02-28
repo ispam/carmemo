@@ -13,7 +13,7 @@ import tech.destinum.carmemo.pojo.User;
 public class DBHelper extends SQLiteOpenHelper {
 
     private final static String DB_NAME = "carmemo";
-    private final static int DB_VERSION = 1;
+    private final static int DB_VERSION = 2;
 
     public final static String TABLE_USERS = "users";
     public final static String USERS_COLUMN_ID = "_id";
@@ -36,15 +36,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String query = String.format("CREATE TABLE " + TABLE_USERS + "("
         + USERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + USERS_COLUMN_NAME + " TEXT NOT NULL, "
+        + USERS_COLUMN_NAME + " TEXT, "
         + USERS_COLUMN_CELLPHONE + " INTEGER, "
         + USERS_COLUMN_FIJO + " INTEGER, "
-        + USERS_COLUMN_EMAIL + " TEXT NOT NULL, "
-        + USERS_COLUMN_SOAT + " DATE NOT NULL, "
-        + USERS_COLUMN_RTM + " DATE NOT NULL, "
-        + USERS_COLUMN_STR + " DATE NOT NULL, "
-        + USERS_COLUMN_SRC + " DATE NOT NULL, "
-        + USERS_COLUMN_TO + " DATE NOT NULL)", TABLE_USERS, USERS_COLUMN_ID, USERS_COLUMN_NAME, USERS_COLUMN_CELLPHONE, USERS_COLUMN_FIJO,
+        + USERS_COLUMN_EMAIL + " TEXT, "
+        + USERS_COLUMN_SOAT + " DATE, "
+        + USERS_COLUMN_RTM + " DATE, "
+        + USERS_COLUMN_STR + " DATE, "
+        + USERS_COLUMN_SRC + " DATE, "
+        + USERS_COLUMN_TO + " DATE)", TABLE_USERS, USERS_COLUMN_ID, USERS_COLUMN_NAME, USERS_COLUMN_CELLPHONE, USERS_COLUMN_FIJO,
                 USERS_COLUMN_EMAIL, USERS_COLUMN_SOAT, USERS_COLUMN_RTM, USERS_COLUMN_STR, USERS_COLUMN_SRC, USERS_COLUMN_TO);
 
         db.execSQL(query);
@@ -54,6 +54,11 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+
+        // If you need to add a column
+//        if (newVersion > oldVersion) {
+//            db.execSQL("ALTER TABLE foo ADD COLUMN new_column INTEGER DEFAULT 0");
+//        }
     }
 
     public void createNewUser(String name, int cell, int fijo, String email, String soat, String rtm, String str, String src, String to){

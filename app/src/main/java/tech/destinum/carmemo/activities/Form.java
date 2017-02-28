@@ -2,22 +2,36 @@ package tech.destinum.carmemo.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.auth0.android.Auth0;
+import com.auth0.android.authentication.AuthenticationAPIClient;
+import com.auth0.android.authentication.AuthenticationException;
+import com.auth0.android.callback.BaseCallback;
+import com.auth0.android.result.UserProfile;
+
+import tech.destinum.carmemo.DB.DBHelper;
 import tech.destinum.carmemo.R;
+import tech.destinum.carmemo.fragments.Result;
+import tech.destinum.carmemo.tools.CredentialsManager;
+import tech.destinum.carmemo.tools.DateWatcher;
 
 public class Form extends AppCompatActivity {
 
     private Switch mSwitchSOAT, mSwitchRTM, mSwitchSTR, mSwitchSRC, mSwitchTO;
     private EditText mETSOAT, mETRTM, mETSTR, mETSRC, mETTO;
+    private UserProfile mUserProfile;
+    private DBHelper mDBHelper;
+    private Auth0 mAuth0;
+    private final static String PREFERENCES = "Preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,13 @@ public class Form extends AppCompatActivity {
         mETTO = (EditText) findViewById(R.id.etTO);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mETSOAT.addTextChangedListener(new DateWatcher(mETSOAT));
+        mETRTM.addTextChangedListener(new DateWatcher(mETRTM));
+        mETSTR.addTextChangedListener(new DateWatcher(mETSTR));
+        mETSRC.addTextChangedListener(new DateWatcher(mETSRC));
+        mETTO.addTextChangedListener(new DateWatcher(mETTO));
+
 
         mSwitchSOAT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +96,7 @@ public class Form extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.form_menu, menu);
@@ -87,8 +109,10 @@ public class Form extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.confirmation:
                 createUser();
-                Intent intent = new Intent();
+                Intent intent = new Intent(getApplicationContext(), Result);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 break;
             case android.R.id.home:
                 onBackPressed();
@@ -97,13 +121,47 @@ public class Form extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO: New method for premium version
+    //free version
     private void createUser() {
-        String soat = mETSOAT.getText().toString();
-        String rtm = mETRTM.getText().toString();
-        String str = mETSTR.getText().toString();
-        String src = mETSRC.getText().toString();
-        String to = mETTO.getText().toString();
 
+        mAuth0 = new Auth0(getString(R.string.auth0_client_id), getString(R.string.auth0_domain));
+        // The process to reclaim an UserProfile is preceded by an Authentication call.
+        AuthenticationAPIClient aClient = new AuthenticationAPIClient(mAuth0);
+        aClient.tokenInfo(CredentialsManager.getCredentials(this).getIdToken())
+                .start(new BaseCallback<UserProfile, AuthenticationException>() {
+                    @Override
+                    public void onSuccess(final UserProfile payload) {
+                        Form.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                mUserProfile = payload;
+                                String soat = mETSOAT.getText().toString();
+                                String rtm = mETRTM.getText().toString();
+                                String str = mETSTR.getText().toString();
+                                String src = mETSRC.getText().toString();
+                                String to = mETTO.getText().toString();
+                                String name = mUserProfile.getName();
 
+                                if (mUserProfile.getEmail() == null){
+                                    SharedPreferences mSharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+                                    String email = mSharedPreferences.getString("email", null);
+                                    mDBHelper.createNewUser(name, 0, 0, email, soat, rtm, str, src, to);
+                                } else {
+                                    String email = mUserProfile.getEmail();
+                                    mDBHelper.createNewUser(name, 0, 0, email, soat, rtm, str, src, to);
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(AuthenticationException error) {
+                        Form.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(Form.this, "Profile Request Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
     }
 }

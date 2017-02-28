@@ -19,4 +19,7 @@
     <string name="auth0_domain">ispam.auth0.com</string>
     <string name="auth0_preferences">AUTH0_SHARED_PREFERENCES_KEY</string>
     <string name="logout">Logout</string>
+    <string name="need_email">We need an Email</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
 </resources>

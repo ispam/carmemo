@@ -15,4 +15,7 @@
     <string name="auth0_domain">ispam.auth0.com</string>
     <string name="auth0_preferences">AUTH0_SHARED_PREFERENCES_KEY</string>
     <string name="logout">Desconectarse</string>
+    <string name="need_email">Necesitamos un Correo</string>
+    <string name="add">Agregar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

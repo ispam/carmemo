@@ -1,8 +1,6 @@
 package tech.destinum.carmemo.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -11,6 +9,7 @@ import com.auth0.android.Auth0;
 import com.auth0.android.authentication.AuthenticationAPIClient;
 import com.auth0.android.authentication.AuthenticationException;
 import com.auth0.android.callback.BaseCallback;
+import com.auth0.android.lock.AuthButtonSize;
 import com.auth0.android.lock.AuthenticationCallback;
 import com.auth0.android.lock.Lock;
 import com.auth0.android.lock.LockCallback;
@@ -22,13 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import tech.destinum.carmemo.NavDrawer;
-import tech.destinum.carmemo.R;
 import tech.destinum.carmemo.tools.CredentialsManager;
 
 public class Login extends AppCompatActivity {
 
     private Lock lock;
-    private static final String PREFERENCES = "Preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,11 +1,12 @@
 package tech.destinum.carmemo;
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class NavDrawer extends AppCompatActivity
     private Auth0 mAuth0;
     private UserProfile mUserProfile;
     private NavigationView mNavigationView;
+    private static final String PREFERENCES = "Preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,35 @@ public class NavDrawer extends AppCompatActivity
             Picasso.with(getApplicationContext()).load(R.drawable.default_pic).into(mImageProfile);
         }
         mName.setText(mUserProfile.getName());
-        mEmail.setText(mUserProfile.getEmail());
+
+        if (mUserProfile.getEmail() == null){
+            final EditText email = new EditText(getApplicationContext());
+            AlertDialog mDialog = new AlertDialog.Builder(NavDrawer.this).setTitle(R.string.need_email).setView(email)
+                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String item = String.valueOf(email.getText()).trim();
+                            if (item.length() <= 0 || item == ""){
+                                Toast.makeText(getApplicationContext(), R.string.need_email, Toast.LENGTH_SHORT).show();
+                            } else {
+                                SharedPreferences mSharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                editor.putString("email", item);
+                                editor.commit();
+                                mEmail.setText(mUserProfile.getEmail());
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(getApplicationContext(), "Need to create settings before using this toast", Toast.LENGTH_LONG).show();
+                        }
+                    }).create();
+            mDialog.show();
+        } else {
+            mEmail.setText(mUserProfile.getEmail());
+        }
     }
 
     @Override
