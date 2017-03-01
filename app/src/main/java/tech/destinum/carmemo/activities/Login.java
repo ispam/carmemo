@@ -9,7 +9,6 @@ import com.auth0.android.Auth0;
 import com.auth0.android.authentication.AuthenticationAPIClient;
 import com.auth0.android.authentication.AuthenticationException;
 import com.auth0.android.callback.BaseCallback;
-import com.auth0.android.lock.AuthButtonSize;
 import com.auth0.android.lock.AuthenticationCallback;
 import com.auth0.android.lock.Lock;
 import com.auth0.android.lock.LockCallback;
@@ -20,7 +19,6 @@ import com.auth0.android.result.UserProfile;
 import java.util.HashMap;
 import java.util.Map;
 
-import tech.destinum.carmemo.NavDrawer;
 import tech.destinum.carmemo.tools.CredentialsManager;
 
 public class Login extends AppCompatActivity {
@@ -43,7 +41,7 @@ public class Login extends AppCompatActivity {
             startActivity(lock.newIntent(this));
             return;
         } else {
-            Intent intent = new Intent(getApplicationContext(), NavDrawer.class);
+            Intent intent = new Intent(getApplicationContext(), Try.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -59,7 +57,7 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Automatic Login Success", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        startActivity(new Intent(getApplicationContext(), NavDrawer.class));
+                        startActivity(new Intent(getApplicationContext(), Try.class));
                         finish();
                     }
 
@@ -90,7 +88,7 @@ public class Login extends AppCompatActivity {
             // Login Success response
             Toast.makeText(getApplicationContext(), "Log In - Success", Toast.LENGTH_SHORT).show();
             CredentialsManager.saveCredentials(getApplicationContext(), credentials);
-            startActivity(new Intent(Login.this, NavDrawer.class));
+            startActivity(new Intent(Login.this, Try.class));
             finish();
         }
 

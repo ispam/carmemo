@@ -1,21 +1,21 @@
-package tech.destinum.carmemo;
+package tech.destinum.carmemo.activities;
 
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,13 +28,12 @@ import com.auth0.android.callback.BaseCallback;
 import com.auth0.android.result.UserProfile;
 import com.squareup.picasso.Picasso;
 
-import tech.destinum.carmemo.activities.Login;
+import tech.destinum.carmemo.R;
 import tech.destinum.carmemo.fragments.Selection;
 import tech.destinum.carmemo.fragments.Settings;
 import tech.destinum.carmemo.tools.CredentialsManager;
 
-public class NavDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class Try extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ImageView mImageProfile;
     private TextView mName, mEmail;
@@ -53,6 +52,7 @@ public class NavDrawer extends AppCompatActivity
         mImageProfile = (ImageView) hView.findViewById(R.id.image_profile);
         mName = (TextView) hView.findViewById(R.id.nav_name);
         mEmail = (TextView) hView.findViewById(R.id.nav_email);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,7 +74,7 @@ public class NavDrawer extends AppCompatActivity
                 .start(new BaseCallback<UserProfile, AuthenticationException>() {
                     @Override
                     public void onSuccess(final UserProfile payload) {
-                        NavDrawer.this.runOnUiThread(new Runnable() {
+                        Try.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 mUserProfile = payload;
                                 refreshScreenInformation();
@@ -84,9 +84,9 @@ public class NavDrawer extends AppCompatActivity
 
                     @Override
                     public void onFailure(AuthenticationException error) {
-                        NavDrawer.this.runOnUiThread(new Runnable() {
+                        Try.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(NavDrawer.this, "Profile Request Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Try.this, "Profile Request Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -105,7 +105,7 @@ public class NavDrawer extends AppCompatActivity
 
         if (mUserProfile.getEmail() == null){
             final EditText email = new EditText(getApplicationContext());
-            AlertDialog mDialog = new AlertDialog.Builder(NavDrawer.this).setTitle(R.string.need_email).setView(email)
+            AlertDialog mDialog = new AlertDialog.Builder(Try.this).setTitle(R.string.need_email).setView(email)
                     .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

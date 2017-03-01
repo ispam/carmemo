@@ -13,7 +13,7 @@ import tech.destinum.carmemo.pojo.User;
 public class DBHelper extends SQLiteOpenHelper {
 
     private final static String DB_NAME = "carmemo";
-    private final static int DB_VERSION = 2;
+    private final static int DB_VERSION = 4;
 
     public final static String TABLE_USERS = "users";
     public final static String USERS_COLUMN_ID = "_id";
@@ -25,10 +25,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public final static String USERS_COLUMN_RTM = "rtm";
     public final static String USERS_COLUMN_STR = "str";
     public final static String USERS_COLUMN_SRC = "src";
-    public final static String USERS_COLUMN_TO = "to";
+    public final static String USERS_COLUMN_TO = "tao";
 
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DB_NAME, factory, DB_VERSION);
+
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String rtm = cursor.getString(cursor.getColumnIndex("rtm"));
             String str = cursor.getString(cursor.getColumnIndex("str"));
             String src = cursor.getString(cursor.getColumnIndex("src"));
-            String to = cursor.getString(cursor.getColumnIndex("to"));
+            String to = cursor.getString(cursor.getColumnIndex("tao"));
             list.add(new User(name, cell, fijo, email, soat, rtm, str, src, to, id));
         }
         cursor.close();

@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -31,12 +34,16 @@ public class Form extends AppCompatActivity {
     private UserProfile mUserProfile;
     private DBHelper mDBHelper;
     private Auth0 mAuth0;
+    private Context mContext;
     private final static String PREFERENCES = "Preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         mSwitchSOAT = (Switch) findViewById(R.id.switchSOAT);
         mSwitchRTM = (Switch) findViewById(R.id.switchRTM);
@@ -109,7 +116,7 @@ public class Form extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.confirmation:
                 createUser();
-                Intent intent = new Intent(getApplicationContext(), Result);
+                Intent intent = new Intent(getApplicationContext(), Try.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -135,6 +142,9 @@ public class Form extends AppCompatActivity {
                         Form.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 mUserProfile = payload;
+
+                                mDBHelper = new DBHelper(getApplicationContext());
+
                                 String soat = mETSOAT.getText().toString();
                                 String rtm = mETRTM.getText().toString();
                                 String str = mETSTR.getText().toString();
