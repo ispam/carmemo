@@ -23,6 +23,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity
+        android:name="com.auth0.android.lock.LockActivity"
+        android:label="@string/app_name"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
+        android:theme="@style/MyTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="ispam.auth0.com"
+                    android:pathPrefix="/android/tech.destinum.carmemo/callback"
+                    android:scheme="https"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.Login"
             android:theme="@style/AppTheme.NoActionBar">
@@ -36,24 +54,7 @@
             android:name=".activities.Form"
             android:parentActivityName=".activities.Try">
         </activity>
-        <activity
-            android:name="com.auth0.android.lock.LockActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/CarmemoTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data
-                    android:host="ispam.auth0.com"
-                    android:pathPrefix="/android/YOUR_APP_PACKAGE_NAME/callback"
-                    android:scheme="https"/>
-            </intent-filter>
-        </activity>
         <activity android:name="com.auth0.android.provider.WebAuthActivity"/>
         <activity android:name=".activities.Try"
                   android:label="@string/title_activity_nav_drawer"
