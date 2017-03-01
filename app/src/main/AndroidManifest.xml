@@ -34,14 +34,14 @@
         </activity>
         <activity
             android:name=".activities.Form"
-            android:parentActivityName=".NavDrawer">
+            android:parentActivityName=".activities.Try">
         </activity>
         <activity
             android:name="com.auth0.android.lock.LockActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Lock.Theme">
+            android:theme="@style/CarmemoTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -57,7 +57,7 @@
         <activity android:name="com.auth0.android.provider.WebAuthActivity"/>
         <activity android:name=".activities.Try"
                   android:label="@string/title_activity_nav_drawer"
-                  android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
