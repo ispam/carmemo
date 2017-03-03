@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="tech.destinum.carmemo.activities.Try">
+    tools:context="tech.destinum.carmemo.activities.BaseActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,12 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/content_frame"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </FrameLayout>
-
+    <include layout="@layout/base_activity_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

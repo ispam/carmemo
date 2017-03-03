@@ -29,23 +29,26 @@ import com.auth0.android.result.UserProfile;
 import com.squareup.picasso.Picasso;
 
 import tech.destinum.carmemo.R;
+import tech.destinum.carmemo.fragments.PrivatePolicy;
 import tech.destinum.carmemo.fragments.Selection;
 import tech.destinum.carmemo.fragments.Settings;
 import tech.destinum.carmemo.tools.CredentialsManager;
 
-public class Try extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ImageView mImageProfile;
     private TextView mName, mEmail;
     private Auth0 mAuth0;
     private UserProfile mUserProfile;
     private NavigationView mNavigationView;
+    private ActionBarDrawerToggle mToggle;
+    private DrawerLayout mDrawerLayout;
     private static final String PREFERENCES = "Preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nav_drawer);
+        setContentView(R.layout.base_activity);
 
         mNavigationView= (NavigationView) findViewById(R.id.nav_view);
         final View hView =  mNavigationView.getHeaderView(0);
@@ -57,11 +60,10 @@ public class Try extends AppCompatActivity implements NavigationView.OnNavigatio
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(mToggle);
+        mToggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
@@ -74,7 +76,7 @@ public class Try extends AppCompatActivity implements NavigationView.OnNavigatio
                 .start(new BaseCallback<UserProfile, AuthenticationException>() {
                     @Override
                     public void onSuccess(final UserProfile payload) {
-                        Try.this.runOnUiThread(new Runnable() {
+                        BaseActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 mUserProfile = payload;
                                 refreshScreenInformation();
@@ -84,15 +86,21 @@ public class Try extends AppCompatActivity implements NavigationView.OnNavigatio
 
                     @Override
                     public void onFailure(AuthenticationException error) {
-                        Try.this.runOnUiThread(new Runnable() {
+                        BaseActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(Try.this, "Profile Request Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BaseActivity.this, "Profile Request Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
 
 
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mToggle.syncState();
     }
 
     private void refreshScreenInformation() {
@@ -105,7 +113,7 @@ public class Try extends AppCompatActivity implements NavigationView.OnNavigatio
 
         if (mUserProfile.getEmail() == null){
             final EditText email = new EditText(getApplicationContext());
-            AlertDialog mDialog = new AlertDialog.Builder(Try.this).setTitle(R.string.need_email).setView(email)
+            AlertDialog mDialog = new AlertDialog.Builder(BaseActivity.this).setTitle(R.string.need_email).setView(email)
                     .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -171,10 +179,23 @@ public class Try extends AppCompatActivity implements NavigationView.OnNavigatio
 
         switch (item.getItemId()){
             case R.id.nav_home:
-                fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
+//                fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
+                Intent intent = new Intent(getApplicationContext(), Reminder.class);
+                startActivity(intent);
+                mDrawerLayout.closeDrawers();
+                overridePendingTransition(0, 0);
                 break;
             case R.id.nav_settings:
                 fragment_manager.beginTransaction().replace(R.id.content_frame, new Settings()).commit();
+                setTitle(R.string.settings);
+                break;
+            case R.id.nav_privacy_policy:
+                fragment_manager.beginTransaction().replace(R.id.content_frame, new PrivatePolicy()).commit();
+                setTitle(R.string.private_policy);
+                break;
+            case R.id.nav_selection:
+                fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();
+                setTitle(R.string.selection);
                 break;
             default:
                 fragment_manager.beginTransaction().replace(R.id.content_frame, new Selection()).commit();

@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tech.destinum.carmemo.R;
+import tech.destinum.carmemo.activities.BaseActivity;
 import tech.destinum.carmemo.adapters.ListAdapter;
 import tech.destinum.carmemo.pojo.Category;
 
 public class Selection extends Fragment {
 
-    private CardView mCardView;
     private ListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Context mContext;
@@ -34,6 +35,7 @@ public class Selection extends Fragment {
 
         View root_view = inflater.inflate(R.layout.selection, container, false);
         mRecyclerView = (RecyclerView) root_view.findViewById(R.id.recycler_view);
+
 
         int[] covers = new int[]{
                 R.drawable.moto,

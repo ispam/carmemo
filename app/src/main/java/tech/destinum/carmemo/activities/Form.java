@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.auth0.android.result.UserProfile;
 
 import tech.destinum.carmemo.DB.DBHelper;
 import tech.destinum.carmemo.R;
-import tech.destinum.carmemo.fragments.Result;
 import tech.destinum.carmemo.tools.CredentialsManager;
 import tech.destinum.carmemo.tools.DateWatcher;
 
@@ -116,7 +112,7 @@ public class Form extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.confirmation:
                 createUser();
-                Intent intent = new Intent(getApplicationContext(), Try.class);
+                Intent intent = new Intent(getApplicationContext(), BaseActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();

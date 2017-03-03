@@ -41,10 +41,7 @@ public class Login extends AppCompatActivity {
             startActivity(lock.newIntent(this));
             return;
         } else {
-            Intent intent = new Intent(getApplicationContext(), Try.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            goHomeScreen();
         }
 
         AuthenticationAPIClient aClient = new AuthenticationAPIClient(auth0);
@@ -55,10 +52,9 @@ public class Login extends AppCompatActivity {
                         Login.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(Login.this, "Automatic Login Success", Toast.LENGTH_SHORT).show();
+                                goHomeScreen();
                             }
                         });
-                        startActivity(new Intent(getApplicationContext(), Try.class));
-                        finish();
                     }
 
                     @Override
@@ -72,6 +68,14 @@ public class Login extends AppCompatActivity {
                         startActivity(lock.newIntent(Login.this));
                     }
                 });
+    }
+
+    private void goHomeScreen() {
+        Intent intent = new Intent(getApplicationContext(), Reminder.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(0,0);
+        finish();
     }
 
     @Override
@@ -88,8 +92,7 @@ public class Login extends AppCompatActivity {
             // Login Success response
             Toast.makeText(getApplicationContext(), "Log In - Success", Toast.LENGTH_SHORT).show();
             CredentialsManager.saveCredentials(getApplicationContext(), credentials);
-            startActivity(new Intent(Login.this, Try.class));
-            finish();
+            goHomeScreen();
         }
 
         @Override
@@ -104,11 +107,5 @@ public class Login extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Log In - Error Occurred", Toast.LENGTH_SHORT).show();
         }
     };
-
-    private void logout() {
-        CredentialsManager.deleteCredentials(this);
-        startActivity(new Intent(this, Login.class));
-        finish();
-    }
 
 }
